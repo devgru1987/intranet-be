@@ -1,0 +1,11 @@
+{
+  "name": "intranet-be",
+  "version": "1.0.0",
+  "description": "backend application for the intranet",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "francis wayungi",
+  "license": "ISC"
+}
