@@ -1,33 +1,22 @@
 const express = require('express')
 const router = express.Router()
-const path =  require('path')
+// const path =  require('path')
+const userController =  require('../controllers/users')
 
 /*
-  create user account
-  login
+  registration -  account creation
+  authorisation -   login
   logout
   disable account
 
 */ 
 
 
-router.route('/users')
-  .get((req, res) => {
+router.get('/register', userController.registerUser) 
 
-  })
-  
-  .post((req, res) => { /* create ne user*/
-  
-  })
+router.post('/login', userController.loginUser)
 
 
-// define the home page route
-router.get('/', (req, res) => {
-  res.send('Birds home page')
-})
-// define the about route
-router.get('/about', (req, res) => {
-  res.send('About birds')
-})
+
 
 module.exports = router
