@@ -3,29 +3,11 @@ const express =  require('express')
 const EventEmitter = require('node:events');
 const path =  require('path')
 const cors = require('cors')
+const corsOptions =  require('./config/corsOprions')
 const { logger, logEvents } =  require('./middleware/LogEvents')
 const { errorHandler } = require('./middleware/errorHandler')
 const app =  express();
 const PORT = process.env.PORT || 3001
-
-const allowedList = [
-    'https://www.google.com', 
-    'http:localhost:3001', 
-    'http:127.0.0.1:3001',
-    'http:localhost:3000', 
-    'http:127.0.0.1:3000'
-]  /*leave only acceptebale front end url here*/
-
-const corsOptions = {
-    origin: function (origin, callback) {
-        if (allowedList.indexOf(origin) !== -1 || !origin ) { /* delete the !origin after dev*/
-            callback(null, true)
-        } else {
-            callback(new Error('Not allowed by CORS'))
-        }
-    },
-    optionSuccessStatus:200
-}
    
 /* custom middleware*/
 app.use(logger) 
@@ -36,16 +18,17 @@ app.use(express.urlencoded({extended: true})) /* urlencoded is form data*/
 app.use(express.json()) /* handle json data*/
 app.use(express.static(path.join(__dirname, '/public'))) /* sets folder accesbile by the public */
 
-app.get('/', (req, res) => {
-    console.log('index page requested')
-})
+/* routers */
+app.use('/users', require('./routes/users'))
+app.use('/policies', require('./routes/policies'))
+app.use('/gallery', require('./routes/gallery'))
 
+/* catch all */ 
+app.all('*', (req, res) => { res.status('404').json({ message: 'Page not found'}) })
 
-app.all('*', (req, res) => {
-    res.status('404').json({ message: 'Page not found'})
-})
+ /* error handler logger */
+app.use(errorHandler)
 
-app.use(errorHandler) // error handler logger
 app.listen(PORT, () => { console.log(`Example app listening on port ${PORT}`) })
 
 

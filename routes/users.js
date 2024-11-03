@@ -2,13 +2,24 @@ const express = require('express')
 const router = express.Router()
 const path =  require('path')
 
-// middleware that is specific to this router
-// const timeLog = (req, res, next) => {
-//   console.log('Time: ', Date.now())
-//   next()
-// }
+/*
+  create user account
+  login
+  logout
+  disable account
 
-// router.use(timeLog)
+*/ 
+
+
+router.route('/users')
+  .get((req, res) => {
+
+  })
+  
+  .post((req, res) => { /* create ne user*/
+  
+  })
+
 
 // define the home page route
 router.get('/', (req, res) => {
