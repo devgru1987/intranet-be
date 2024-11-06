@@ -6,6 +6,8 @@ const cors = require('cors')
 const corsOptions =  require('./config/corsOprions')
 const { logger, logEvents } =  require('./middleware/LogEvents')
 const { errorHandler } = require('./middleware/errorHandler');
+const mongoose =  require('mongoose')
+const dbCon = require('./config/dbCon')
 // const verifyJWT = require('./middleware/verifyJWT');
 const app =  express();
 const PORT = process.env.PORT || 3001
@@ -19,6 +21,8 @@ app.use(express.urlencoded({extended: true})) /* urlencoded is form data*/
 app.use(express.json()) /* handle json data*/
 app.use(express.static(path.join(__dirname, '/public'))) /* sets folder accesbile by the public */
 
+dbCon()
+
 /* routers */
 app.use('/users', require('./routes/users'))
 // app.use(verifyJWT) 
@@ -31,7 +35,9 @@ app.all('*', (req, res) => { res.status('404').json({ message: 'Page not found'}
  /* error handler logger */
 app.use(errorHandler)
 
-app.listen(PORT, () => { console.log(`Example app listening on port ${PORT}`) })
+mongoose.connection.once('connected', () => {
+    app.listen(PORT, () => { console.log(`intranet running on port: ${PORT}`) })
+});
 
 
 
