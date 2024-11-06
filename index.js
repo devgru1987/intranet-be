@@ -5,7 +5,8 @@ const path =  require('path')
 const cors = require('cors')
 const corsOptions =  require('./config/corsOprions')
 const { logger, logEvents } =  require('./middleware/LogEvents')
-const { errorHandler } = require('./middleware/errorHandler')
+const { errorHandler } = require('./middleware/errorHandler');
+// const verifyJWT = require('./middleware/verifyJWT');
 const app =  express();
 const PORT = process.env.PORT || 3001
    
@@ -20,6 +21,7 @@ app.use(express.static(path.join(__dirname, '/public'))) /* sets folder accesbil
 
 /* routers */
 app.use('/users', require('./routes/users'))
+// app.use(verifyJWT) 
 app.use('/policies', require('./routes/policies'))
 app.use('/gallery', require('./routes/gallery'))
 
