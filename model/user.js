@@ -1,10 +1,10 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose')
 const { Schema } = mongoose;
 
 const userSchema = new Schema({
   username: String,
   password: {
-    tyep: String,
+    type: String,
     required: true
   },
   roles: {
@@ -12,8 +12,8 @@ const userSchema = new Schema({
         type:Number,
         default: 2001
     },
-    Editor: Number,
-    Admin: Number
+    Editor: Number,  //1984
+    Admin: Number //5150
   },
   refreshToken: String,
   creationDate: Date

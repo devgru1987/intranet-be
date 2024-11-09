@@ -30,7 +30,7 @@ app.use('/policies', require('./routes/policies'))
 app.use('/gallery', require('./routes/gallery'))
 
 /* catch all */ 
-app.all('*', (req, res) => { res.status('404').json({ message: 'Page not found'}) })
+app.all('*', (req, res) => { res.status(404).json({ message: 'Page not found'}) })
 
  /* error handler logger */
 app.use(errorHandler)

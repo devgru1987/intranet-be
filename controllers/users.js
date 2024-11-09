@@ -1,21 +1,23 @@
 require('dotenv').config()
 const bcrypt =  require('bcrypt');
 const jwt =  require('jsonwebtoken')
+const User =  require('../model/user')
 
 const registerUser = async (req, res) => {
     const saltRounds = 10
-    const [username, password] = req.body
+    const { username, password } = req.body
     if(!username || !password) res.status(400).json({message: "Username and password are required"})  //400 -  bad request
     try{
-        const duplicate =  '' 
-        if(duplicate) res.status(409).json({messahe: 'username name is already taken'}) //409 -  conflict
-        const passowrdHash =  await bcrypt.hash(password, saltRounds)
-        const newUser = {
+        const duplicate =  await User.findOne({username}).exec()
+        if(duplicate) return res.status(409).json({message: `username ${duplicate.username} is already taken`}) //409 -  conflict
+        const passwordHash =  await bcrypt.hash(password, saltRounds)
+        const newUser = await User.create({
             username,
             password: passwordHash
-        }
+        })
+        return res.status(200).json({"message": newUser})
     }catch(err) {
-        res.status(500).json({message: 'Internal server error, please try again later'})
+        return res.status(500).json({message: `Error: ${err}`})
     }
 }
 

@@ -10,6 +10,11 @@ const path =  require('path')
 */ 
 
 // define the home page route
+router.post('/upload', (req, res) => {
+    console.log(req.body)
+    res.send('Birds home page')
+})
+
 router.get('/', (req, res) => {
   res.send('Birds home page')
 })
