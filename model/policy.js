@@ -3,11 +3,15 @@ const { Schema } = mongoose;
 
 const policySchema = new Schema({
   department: String,
-  oringinalname: String,
+  originalname: String,
   destination: String,
   filename: String,
   path: String,
   size: Number,
+  isDeleted: {
+    type: Boolean,
+    default: false,
+  },
   creationDate: Date
 });
 
