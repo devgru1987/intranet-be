@@ -37,7 +37,7 @@ router.post('/upload', upload.single('file'), async (req, res) => {
 
 router.get('/fetch', async (req, res) => {
   try{
-    const policies =  await Policy.find({});
+    const policies =  await Policy.find({isDeleted:false});
     if(policies) return res.status(200).json({policies})
   }catch(err){
     res.status(200).json({"message":`Error: ${err}`})
