@@ -13,7 +13,6 @@ const Policy = require('../model/policy')
 
 router.post('/upload', upload.single('file'), async (req, res) => {
   if(!req.body || !req.file) return res.status(400).json({"message": "Please fill in the department and select a policy document to be uploaded"})
-    // console.log(req.file)
   const { originalname, destination, filename, path, size } =  req.file
   const { department } =  req.body
      
