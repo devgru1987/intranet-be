@@ -20,20 +20,30 @@ router.post('/upload', upload.single('file'),  async (req, res) => {
   })
   return res.status(200).json({"message": newPicture})
   }catch(err){
-    console.log(`Error: ${err}`)
     return res.status(500).json({message: `Error: ${err}`})
   }
 })
 
-// define the about route
-router.get('/fetchall', async (req, res) => {
+router.get('/fetch/pictures', async (req, res) => {
   try{
     const pictures =  await Picture.find({isDeleted:false});
-    if(pictures) return res.status(200).json({policies})
+    if(pictures) return res.status(200).json({pictures})
       /*what do we return if ther are no pictures*/ 
     // return res.status(400).json({})
   }catch(err){
     res.status(200).json({"message":`Error: ${err}`})
+  }
+})
+
+router.delete('/delete/:id', async (req, res) => {
+  if(!req.params.id) return res.status(400).json({"message":"Bad request"})
+  const id = req.params.id
+  try{
+    const deletedPicture = await Picture.deleteOne({ _id: id})
+    if(!deletedPicture) res.status(500).json({"message": "internal server error"}) /*revise it to checkk before deleting*/
+    return res.status(200).json({deletedPicture})
+  }catch(err){
+    return res.status(500).json({"message": "Internal server error"})
   }
 })
 
