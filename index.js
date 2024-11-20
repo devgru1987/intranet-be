@@ -28,6 +28,7 @@ app.use('/users', require('./routes/users'))
 // app.use(verifyJWT) 
 app.use('/policies', require('./routes/policies'))
 app.use('/gallery', require('./routes/gallery'))
+app.use('/events', require('./routes/events'))
 
 /* catch all */ 
 app.all('*', (req, res) => { res.status(404).json({ message: 'Page not found'}) })
