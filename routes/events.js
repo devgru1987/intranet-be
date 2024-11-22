@@ -23,26 +23,24 @@ router.post('/',  async (req, res) => {
 })
 
 router.get('/', async (req, res) => {
-//   try{
-//     const pictures =  await Picture.find({isDeleted:false});
-//     if(pictures) return res.status(200).json({pictures})
-//       /*what do we return if ther are no pictures*/ 
-//     // return res.status(400).json({})
-//   }catch(err){
-//     res.status(200).json({"message":`Error: ${err}`})
-//   }
+  try{
+    const events =  await CalenderEvent.find({isDeleted:false});
+    if(events) return res.status(200).json({events})
+  }catch(err){
+    res.status(200).json({"message":`Error: ${err}`})
+  }
 })
 
 router.delete('/delete/:id', async (req, res) => {
-//   if(!req.params.id) return res.status(400).json({"message":"Bad request"})
-//   const id = req.params.id
-//   try{
-//     const deletedPicture = await Picture.deleteOne({ _id: id})
-//     if(!deletedPicture) res.status(500).json({"message": "internal server error"}) /*revise it to checkk before deleting*/
-//     return res.status(200).json({deletedPicture})
-//   }catch(err){
-//     return res.status(500).json({"message": "Internal server error"})
-//   }
+  if(!req.params.id) return res.status(400).json({"message": "Please select an item to delete"})
+  const _id = req.params.id
+  try{
+    const deletedEvent = await CalenderEvent.deleteOne({ _id})
+    if(!deletedEvent) res.status(500).json({"message": "internal server error"}) /*revise it to checkk before deleting*/
+    return res.status(200).json({deletedEvent})
+  }catch(err){
+    return res.status(500).json({"message": "Internal server error"})
+  }
 })
 
 module.exports = router
