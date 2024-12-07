@@ -35,7 +35,7 @@ router.delete('/delete/:id', async (req, res) => {
   if(!req.params.id) return res.status(400).json({"message": "Please select an item to delete"})
   const _id = req.params.id
   try{
-    const deletedEvent = await CalenderEvent.deleteOne({ _id})
+    const deletedEvent = await CalenderEvent.findOneAndDelete({ _id})
     if(!deletedEvent) res.status(500).json({"message": "internal server error"}) /*revise it to checkk before deleting*/
     return res.status(200).json({deletedEvent})
   }catch(err){
